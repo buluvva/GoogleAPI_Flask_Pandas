@@ -3,6 +3,7 @@ import datetime
 import pygsheets as pg
 import dateutil
 from flask import Flask
+from url import url_salary, url_table
 app = Flask(__name__)
 scope = ["https://spreadsheets.google.com/feeds",
          'https://www.googleapis.com/auth/spreadsheets',
@@ -15,8 +16,6 @@ c = pg.authorize(client_secret='client_secret.json',
                  scopes=scope,
                  custom_credentials=None,
                  local=False)
-url_salary = 'https://docs.google.com/spreadsheets/d/1U2Ni52WaqbAM_TX_egCNeyGm7RC9pblhk7ywWhHJry8/edit#gid=0'
-url_table = 'https://docs.google.com/spreadsheets/d/1bP9pB_edQEWcc4N-oElhCQFBMFyW7DjrzwmlLcfLHPA/edit#gid=0'
 
 
 def grabber(url):
@@ -34,6 +33,7 @@ def show_entries():
 
 
 def prog():
+
     data_salary = grabber(url_salary)
     data_table = grabber(url_table)
     name = data_table.loc[:, 'Фамилия'] + ' ' + data_table.loc[:, 'Имя']
@@ -73,4 +73,4 @@ def prog():
 
 if __name__ == '__main__':
     app.run(debug=True)
-    prog()
+    
